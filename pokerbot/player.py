@@ -344,6 +344,7 @@ class Player(Bot):
         my_contribution = STARTING_STACK - my_stack  # the number of chips you have contributed to the pot
         opp_contribution = STARTING_STACK - opp_stack  # the number of chips your opponent has contributed to the pot
         
+        # decisions from running simulation
         #0 index - 2 index: 70 percent, 82.5 percent hand, 91 percent hand - opening
         #3 index - 5 index: merged hands (default), polarized (loose) - defending with bluffs, (5) tight
         ranges = {
@@ -525,14 +526,14 @@ class Player(Bot):
                     decision = ranges[hand[0]][hand[1]][self.three_bet_decision]
 
                     # #if high fold rate to 3-bets: randomly raise folds (bluff)
-                    # if self.fold_to_3bet > 0.75 and self.my_3bets > 10:
-                    #     if decision == "Fold":
-                    #         if random.random() > 0.3:
-                    #             decision == "Raise"
-                    # elif self.fold_to_3bet < 0.25 and self.my_3bets> 10: #low fold rate to 3-bets
-                    #     if decision == "Raise": #high high value hand
-                    #         if random.random() > 0.3 and p > 0.5:
-                    #             self.three_bet_sizing = 4
+                    if self.fold_to_3bet > 0.75 and self.my_3bets > 10:
+                        if decision == "Fold":
+                            if random.random() > 0.3:
+                                decision == "Raise"
+                    elif self.fold_to_3bet < 0.25 and self.my_3bets> 10: #low fold rate to 3-bets
+                        if decision == "Raise": #high high value hand
+                            if random.random() > 0.3 and p > 0.5:
+                                self.three_bet_sizing = 4
 
                     #if playing tight due to low frequency of fold, oftentimes get stuck since we fold and don't give 3-bets
                     #allow more 3-betting when playing tight so we don't get stuck
